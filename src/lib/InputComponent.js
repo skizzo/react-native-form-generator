@@ -36,6 +36,7 @@ export class InputComponent extends React.Component{
     this.handleChange = this.handleChange.bind(this)
     this.handleFieldPress = this.handleFieldPress.bind(this)
     this._scrollToInput = this._scrollToInput.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   setValue(value){
@@ -98,20 +99,20 @@ export class InputComponent extends React.Component{
     return this.valid;
   }
   handleLayoutChange(e){
-	  if (Platform.OS === 'ios') {
-		  let {x, y, width, height} = {... e.nativeEvent.layout};
+    if (Platform.OS === 'ios') {
+      let {x, y, width, height} = {... e.nativeEvent.layout};
 
-	      this.setState(e.nativeEvent.layout);
-	  }
+        this.setState(e.nativeEvent.layout);
+    }
     // //e.nativeEvent.layout: {x, y, width, height}}}.
   }
 
   handleLabelLayoutChange(e){
-	  if (Platform.OS === 'ios') {
-		  let {x, y, width, height} = {... e.nativeEvent.layout};
+    if (Platform.OS === 'ios') {
+      let {x, y, width, height} = {... e.nativeEvent.layout};
 
-	      this.setState({labelWidth:width});
-	  }
+        this.setState({labelWidth:width});
+    }
     // //e.nativeEvent.layout: {x, y, width, height}}}.
   }
   handleChange(event){
@@ -128,6 +129,30 @@ export class InputComponent extends React.Component{
     //this.props.onChange(this.props.fieldRef, value);
     if(this.props.onChange)      this.props.onChange(value, this.valid);
     if(this.props.onValueChange) this.props.onValueChange(value,this.valid);
+  } 
+  handleSubmit (event) {
+    if (this.props.onSubmit) {
+      let handle = ReactNative.findNodeHandle(this.refs.inputBox);
+      this.props.onSubmit (
+        event,
+        handle
+      )
+    }
+    /*
+    const value = event.nativeEvent.text;
+
+    this.validate(value);
+
+    this.setState({value,
+      inputHeight: Math.max(this.state.minFieldHeight,
+        (event.nativeEvent.contentSize && this.props.multiline)
+          ? event.nativeEvent.contentSize.height
+          : 0)
+      });
+    //this.props.onChange(this.props.fieldRef, value);
+    if(this.props.onChange)      this.props.onChange(value, this.valid);
+    if(this.props.onValueChange) this.props.onValueChange(value,this.valid);
+    */
   }
 
   _scrollToInput (event) {
@@ -180,6 +205,7 @@ export class InputComponent extends React.Component{
 
             onChange={this.handleChange}
             onFocus={this._scrollToInput}
+            onSubmitEditing={this.handleSubmit}
             placeholder={this.props.placeholder}
             value={this.state.value}
             width={this.state.width-this.state.labelWidth

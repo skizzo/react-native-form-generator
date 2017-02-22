@@ -19,6 +19,9 @@ export class Form extends React.Component{
   handleFieldFocused(event, inputHandle){
     this.props.onFocus && this.props.onFocus(event, inputHandle);
   }
+  handleFieldSubmit(event, inputHandle){
+    this.props.onSubmit && this.props.onSubmit(event, inputHandle);
+  }
   handleFieldChange(field_ref, value){
     this.values[field_ref] = value;
     this.props.onChange && this.props.onChange(this.values);
@@ -49,7 +52,8 @@ export class Form extends React.Component{
           fieldRef : child.ref,
           ref: child.ref,
           onFocus:this.handleFieldFocused.bind(this),
-          onChange:this.handleFieldChange.bind(this, child.ref)
+          onChange:this.handleFieldChange.bind(this, child.ref),
+          onSubmit:this.handleFieldSubmit.bind(this),
         }
       ));
     }, this);
