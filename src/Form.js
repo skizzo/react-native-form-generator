@@ -14,7 +14,8 @@ export class Form extends React.Component{
     super();
 
     this.values = {};
-
+    debugger
+    alert("SKIZZO's FORK")
   }
 
   handleFieldFocused(event, inputHandle){
