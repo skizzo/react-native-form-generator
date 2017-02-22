@@ -17,5 +17,3 @@ export {
         SwitchField, PickerField, DatePickerField,
         TimePickerField
       }
-
-alert("SKIZZO'S FORK")
